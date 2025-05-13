@@ -1,12 +1,12 @@
 const express = require('express'); 
 const router = express.Router(); 
 
-const locais_irrigacaoController = require('../controllers/locais_irrigacao'); 
+const locaisirrigacaoController = require('../controllers/locais_irrigacao'); 
 
-router.get('/locais_irrigacao', locais_irrigacaoController.listarlocais_irrigacao); 
-router.post('/locais_irrigacao', locais_irrigacaoController.cadastrarlocais_irrigacao); 
-router.patch('/ulocais_irrigacao', locais_irrigacaoController.editarlocais_irrigacao); 
-router.delete('/locais_irrigacao', locais_irrigacaoController.apagarlocais_irrigacao); 
+router.get('/locais-irrigacao', locaisirrigacaoController.listarlocais_irrigacao); 
+router.post('/locais-irrigacao', locaisirrigacaoController.cadastrarlocais_irrigacao); 
+router.patch('/locais-irrigacao', locaisirrigacaoController.editarlocais_irrigacao); 
+router.delete('/locais-irrigacao', locaisirrigacaoController.apagarlocais_irrigacao); 
 
 
 module.exports = router;

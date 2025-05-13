@@ -1,62 +1,63 @@
 const db = require('../database/connection'); 
 
 module.exports = {
-    async listarUsuarios(request, response) {
+    async listarlocais_irrigacao(request, response) {
         try {
+            
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Lista de usuários', 
+                mensagem: 'Lista de locais Irrigação', 
                 dados: null
             });
         } catch (error) {
             return response.status(500).json({
                 sucesso: false, 
-                mensagem: 'Erro na requisição.', 
+                mensagem: 'Erro na locais Irrigação.', 
                 dados: error.message
             });
         }
     }, 
-    async cadastrarUsuarios(request, response) {
+    async cadastrarlocais_irrigacao(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Cadastro de usuários', 
+                mensagem: 'Cadastro de locais Irrigação', 
                 dados: null
             });
         } catch (error) {
             return response.status(500).json({
                 sucesso: false, 
-                mensagem: 'Erro na requisição.', 
+                mensagem: 'Erro na locais Irrigação.', 
                 dados: error.message
             });
         }
     }, 
-    async editarUsuarios(request, response) {
+    async editarlocais_irrigacao(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Alteração no cadastro de usuário', 
+                mensagem: 'Alteração no locais Irrigação', 
                 dados: null
             });
         } catch (error) {
             return response.status(500).json({
                 sucesso: false, 
-                mensagem: 'Erro na requisição.', 
+                mensagem: 'Erro na locais Irrigação.', 
                 dados: error.message
             });
         }
     }, 
-    async apagarUsuarios(request, response) {
+    async apagarlocais_irrigacao(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Exclusão de usuário', 
+                mensagem: 'Exclusão de locais Irrigação', 
                 dados: null
             });
         } catch (error) {
             return response.status(500).json({
                 sucesso: false, 
-                mensagem: 'Erro na requisição.', 
+                mensagem: 'Erro na locais Irrigação.', 
                 dados: error.message
             });
         }
