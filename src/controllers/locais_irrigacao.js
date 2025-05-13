@@ -3,7 +3,16 @@ const db = require('../database/connection');
 module.exports = {
     async listarlocais_irrigacao(request, response) {
         try {
+
+            const sql = `
+            SELECT
+            SELECT id_loc_irriga, nome, status, id_usu FROM locais_irrigacao;
+           FROM locais-irrigacao
+            `;
+
+            const [rows] = await db.query(sql);
             
+             
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Lista de locais Irrigação', 
