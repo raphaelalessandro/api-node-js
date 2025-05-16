@@ -5,9 +5,8 @@ module.exports = {
         try {
 
             const sql = `
-            SELECT
-            SELECT id_loc_irriga, nome, status, id_usu FROM locais_irrigacao;
-           FROM locais-irrigacao
+            SELECT id_loc_irriga, nome, status, id_usu 
+           FROM locais_irrigacao
             `;
 
             const [rows] = await db.query(sql);
@@ -16,7 +15,8 @@ module.exports = {
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Lista de locais Irrigação', 
-                dados: null
+                itens: rows.length,
+                dados: rows
             });
         } catch (error) {
             return response.status(500).json({
@@ -29,13 +29,13 @@ module.exports = {
     async cadastrarlocais_irrigacao(request, response) {
         try {
 
-            const { nome, status, id_usu,} = request.body;
-       
+            const { nome, status, id_usu} = request.body;
+            const locais_irrigacao_ativo = 1;
             const sql = `
             INSERT INTO locais_irrigacao
-                    ( locais_irrigacao_nome,  locais_irrigacao_status, locais_irrigacao_id_usu)
+                    ( nome, status, id_usu)
             VALUES 
-                    (?, ?, ?, ?, ?, ?, ?,)
+                    (?, ?, ?,);
             `;
 
             const values = [nome, status, id_usu];
@@ -43,7 +43,8 @@ module.exports = {
             const [result] = await db.query(sql, values);
 
             const dados = {
-
+                nome,
+                status
             };
             
             return response.status(200).json({
@@ -61,6 +62,12 @@ module.exports = {
     }, 
     async editarlocais_irrigacao(request, response) {
         try {
+            const {nome, status, id_usu} = request.body;
+            const {id} = request.params;
+            const sql = `
+            UPDATE locais_irrigacao SET 
+                 nome = ?, status, id_usu
+            `
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Alteração no locais Irrigação', 
