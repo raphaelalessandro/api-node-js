@@ -28,6 +28,24 @@ module.exports = {
     }, 
     async cadastrarlocais_irrigacao(request, response) {
         try {
+
+            const { nome, status, id_usu,} = request.body;
+       
+            const sql = `
+            INSERT INTO locais_irrigacao
+                    ( locais_irrigacao_nome,  locais_irrigacao_status, locais_irrigacao_id_usu)
+            VALUES 
+                    (?, ?, ?, ?, ?, ?, ?,)
+            `;
+
+            const values = [nome, status, id_usu];
+
+            const [result] = await db.query(sql, values);
+
+            const dados = {
+
+            };
+            
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Cadastro de locais Irrigação', 
