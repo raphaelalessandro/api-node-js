@@ -39,12 +39,11 @@ module.exports = {
             const [result] = await db.query(sql, values);
 
             const dados = {
-                id: result.insertId,
+                id_loc_irriga: result.insertId, 
                 nome,
                 status,
                 id_usu
             };
-
             return response.status(200).json({
                 sucesso: true,
                 mensagem: 'Cadastro de local de irrigação realizado com sucesso!',
@@ -61,28 +60,37 @@ module.exports = {
 
     async editarlocais_irrigacao(request, response) {
         try {
-            const { nome, status, id_usu } = request.body;
-            const { id } = request.params;
-
+            const { nome, status, id_usu } = request.body; // Dados a atualizar
+            const { id } = request.params; // ID do local que será atualizado
+    
             const sql = `
                 UPDATE locais_irrigacao
                 SET nome = ?, status = ?, id_usu = ?
                 WHERE id_loc_irriga = ?;
             `;
-
+    
             const values = [nome, status, id_usu, id];
-
-            await db.query(sql, values);
-
+    
+            const [result] = await db.query(sql, values);
+    
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: 'Local de irrigação não encontrado para atualização.',
+                    dados: null
+                });
+            }
+    
             return response.status(200).json({
                 sucesso: true,
-                mensagem: 'Alteração realizada com sucesso no local de irrigação!',
-                dados: { id, nome, status, id_usu }
+                mensagem: 'Local de irrigação atualizado com sucesso!',
+                dados: { id_loc_irriga: id, nome, status, id_usu }
             });
+    
         } catch (error) {
             return response.status(500).json({
                 sucesso: false,
-                mensagem: 'Erro ao editar local de irrigação.',
+                mensagem: 'Erro ao atualizar local de irrigação.',
                 dados: error.message
             });
         }
