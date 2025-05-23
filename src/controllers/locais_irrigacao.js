@@ -60,31 +60,36 @@ module.exports = {
 
     async editarlocais_irrigacao(request, response) {
         try {
-            const { nome, status, id_usu } = request.body; // Dados a atualizar
-            const { id } = request.params; // ID do local que será atualizado
+            const { nome, status } = request.body; 
+            const { id } = request.params; 
     
             const sql = `
                 UPDATE locais_irrigacao
-                SET nome = ?, status = ?, id_usu = ?
+                SET nome = ?, status = ? 
                 WHERE id_loc_irriga = ?;
             `;
     
-            const values = [nome, status, id_usu, id];
+            const values = [nome, status, id];
     
             const [result] = await db.query(sql, values);
     
             if (result.affectedRows === 0) {
                 return response.status(404).json({
                     sucesso: false,
-                    mensagem: 'Local de irrigação não encontrado para atualização.',
+                    mensagem: `Local de irrigação não encontrado para atualização.`,
                     dados: null
                 });
             }
-    
+               const dados = {
+                id,
+                nome,
+                status
+               };
+
             return response.status(200).json({
                 sucesso: true,
-                mensagem: 'Local de irrigação atualizado com sucesso!',
-                dados: { id_loc_irriga: id, nome, status, id_usu }
+                mensagem: `Local de irrigação ${id} atualizado com sucesso!`,
+                dados
             });
     
         } catch (error) {
