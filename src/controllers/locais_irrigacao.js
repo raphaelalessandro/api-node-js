@@ -105,18 +105,24 @@ module.exports = {
         try {
             const { id } = request.params;
 
-            const sql = `
-                DELETE FROM locais_irrigacao WHERE id_loc_irriga = ?;
-            `;
+            const sql = `DELETE FROM locais_irrigacao WHERE id_loc_irriga = ?;`;
+            const values = [id];
+            const [result] = await db.query(sql, values);
 
-            await db.query(sql, [id]);
-
+            if (result.affectedRows === 0) {
+                return response.status(404).json({  
+                    sucesso: false,
+                    mensagem: `Local de irrigação ${id} não encontrado.`,
+                    dados: null
+                });
+            }
+            
             return response.status(200).json({
                 sucesso: true,
-                mensagem: 'Local de irrigação excluído com sucesso.',
-                dados: { id }
-            });
-        } catch (error) {
+                mensagem: `Local de irrigação ${id} excluído com sucesso.`,
+                dados: null
+         });
+       }  catch (error) {
             return response.status(500).json({
                 sucesso: false,
                 mensagem: 'Erro ao excluir local de irrigação.',
